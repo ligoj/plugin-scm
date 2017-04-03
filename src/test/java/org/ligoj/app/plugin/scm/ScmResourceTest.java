@@ -1,4 +1,4 @@
-package fr.gfi.saas.resource.plugin.scm;
+package org.ligoj.app.plugin.scm;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;

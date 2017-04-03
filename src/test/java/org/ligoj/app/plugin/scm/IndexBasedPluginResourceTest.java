@@ -1,4 +1,4 @@
-package fr.gfi.saas.resource.plugin.scm;
+package org.ligoj.app.plugin.scm;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.get;
@@ -21,7 +21,6 @@ import org.junit.Test;
 import org.ligoj.app.AbstractServerTest;
 import org.ligoj.app.MatcherUtil;
 import org.ligoj.app.api.SubscriptionStatusWithData;
-import org.ligoj.app.plugin.scm.AbstractIndexBasedPluginResource;
 import org.ligoj.app.resource.node.NodeResource;
 import org.ligoj.app.resource.subscription.SubscriptionResource;
 import org.ligoj.bootstrap.core.NamedBean;
