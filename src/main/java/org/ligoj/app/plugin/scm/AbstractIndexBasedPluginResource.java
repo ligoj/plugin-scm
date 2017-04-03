@@ -199,18 +199,6 @@ public abstract class AbstractIndexBasedPluginResource extends AbstractToolPlugi
 	}
 
 	@Override
-	public String getVersion(final Map<String, String> parameters) {
-		// Not implemented
-		return null;
-	}
-
-	@Override
-	public String getLastVersion() {
-		// Not implemented
-		return null;
-	}
-
-	@Override
 	public boolean checkStatus(final String node, final Map<String, String> parameters) {
 		// Status is UP <=> Administration access is UP (if defined)
 		validateAccess(parameters);

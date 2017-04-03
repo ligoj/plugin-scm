@@ -74,9 +74,10 @@ public class IndexBasedPluginResourceTest extends AbstractServerTest {
 				Mockito.when(nodeResource.getParametersAsMap("service:impl:node")).thenReturn(parameters);
 
 				inMemoryPagination = Mockito.mock(InMemoryPagination.class);
-				Mockito.when(inMemoryPagination.newPage(ArgumentMatchers.anyCollection(), ArgumentMatchers.any(Pageable.class)))
-						.thenAnswer(i -> new PageImpl<>(new ArrayList<>((Collection<Object>) i.getArguments()[0]), (Pageable) i.getArguments()[1],
-								((Collection<Object>) i.getArguments()[0]).size()));
+				Mockito.when(inMemoryPagination.newPage(ArgumentMatchers.anyCollection(),
+						ArgumentMatchers.any(Pageable.class)))
+						.thenAnswer(i -> new PageImpl<>(new ArrayList<>((Collection<Object>) i.getArguments()[0]),
+								(Pageable) i.getArguments()[1], ((Collection<Object>) i.getArguments()[0]).size()));
 			}
 		};
 	}
@@ -91,7 +92,8 @@ public class IndexBasedPluginResourceTest extends AbstractServerTest {
 		prepareMockRepository();
 		httpServer.start();
 
-		// Invoke create for an already created entity, since for now, there is nothing but validation pour SonarQube
+		// Invoke create for an already created entity, since for now, there is
+		// nothing but validation pour SonarQube
 		resource.link(1);
 
 		// Nothing to validate for now...
@@ -107,7 +109,8 @@ public class IndexBasedPluginResourceTest extends AbstractServerTest {
 
 		parameters.put("service:repository", "any");
 
-		// Invoke create for an already created entity, since for now, there is nothing but validation pour SonarQube
+		// Invoke create for an already created entity, since for now, there is
+		// nothing but validation pour SonarQube
 		resource.link(1);
 
 		// Nothing to validate for now...
@@ -116,20 +119,23 @@ public class IndexBasedPluginResourceTest extends AbstractServerTest {
 	@Test
 	public void checkSubscriptionStatus() throws Exception {
 		prepareMockRepository();
-		final SubscriptionStatusWithData nodeStatusWithData = resource.checkSubscriptionStatus(subscriptionResource.getParametersNoCheck(1));
+		final SubscriptionStatusWithData nodeStatusWithData = resource
+				.checkSubscriptionStatus(subscriptionResource.getParametersNoCheck(1));
 		Assert.assertTrue(nodeStatusWithData.getStatus().isUp());
 		Assert.assertEquals(1, nodeStatusWithData.getData().get("info"));
 	}
 
 	private void prepareMockRepository() throws IOException {
 		httpServer.stubFor(get(urlPathEqualTo("/my-repo/")).willReturn(aResponse().withStatus(HttpStatus.SC_OK)
-				.withBody(IOUtils.toString(new ClassPathResource("mock-server/scm/my-repo.html").getInputStream(), StandardCharsets.UTF_8))));
+				.withBody(IOUtils.toString(new ClassPathResource("mock-server/scm/my-repo.html").getInputStream(),
+						StandardCharsets.UTF_8))));
 		httpServer.start();
 	}
 
 	private void prepareMockAdmin() throws IOException {
 		httpServer.stubFor(get(urlPathEqualTo("/")).willReturn(aResponse().withStatus(HttpStatus.SC_OK)
-				.withBody(IOUtils.toString(new ClassPathResource("mock-server/scm/index.html").getInputStream(), StandardCharsets.UTF_8))));
+				.withBody(IOUtils.toString(new ClassPathResource("mock-server/scm/index.html").getInputStream(),
+						StandardCharsets.UTF_8))));
 		httpServer.start();
 	}
 
@@ -160,7 +166,8 @@ public class IndexBasedPluginResourceTest extends AbstractServerTest {
 	public void checkStatusInvalidIndex() throws Exception {
 		thrown.expect(ValidationJsonException.class);
 		thrown.expect(MatcherUtil.validationMatcher("service:url", "impl-admin"));
-		httpServer.stubFor(get(urlPathEqualTo("/")).willReturn(aResponse().withStatus(HttpStatus.SC_OK).withBody("<html>some</html>")));
+		httpServer.stubFor(get(urlPathEqualTo("/"))
+				.willReturn(aResponse().withStatus(HttpStatus.SC_OK).withBody("<html>some</html>")));
 		httpServer.start();
 		resource.checkStatus(subscriptionResource.getParametersNoCheck(1));
 	}
@@ -184,7 +191,6 @@ public class IndexBasedPluginResourceTest extends AbstractServerTest {
 		Assert.assertEquals(0, projects.size());
 	}
 
-
 	@Test
 	public void checkStatusNoIndex() throws Exception {
 		prepareMockAdmin();
@@ -197,5 +203,17 @@ public class IndexBasedPluginResourceTest extends AbstractServerTest {
 		prepareMockAdmin();
 		parameters.put("service:url", "hq://");
 		Assert.assertTrue(resource.checkStatus(subscriptionResource.getParametersNoCheck(1)));
+	}
+
+	@Test
+	public void getKey() throws IOException {
+		// Coverage only
+		Assert.assertEquals("service:scm:impl", resource.getKey());
+	}
+
+	@Test
+	protected void toData(final String statusContent) {
+		Assert.assertEquals("some", new AbstractIndexBasedPluginResource("service", "impl") {
+		}.toData("some"));
 	}
 }
