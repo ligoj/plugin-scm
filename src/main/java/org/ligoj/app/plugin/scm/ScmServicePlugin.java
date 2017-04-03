@@ -1,4 +1,4 @@
-package fr.gfi.saas.resource.plugin.scm;
+package org.ligoj.app.plugin.scm;
 
 import org.ligoj.app.api.ServicePlugin;
 

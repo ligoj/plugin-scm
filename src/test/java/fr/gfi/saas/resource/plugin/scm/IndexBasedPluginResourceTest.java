@@ -21,6 +21,7 @@ import org.junit.Test;
 import org.ligoj.app.AbstractServerTest;
 import org.ligoj.app.MatcherUtil;
 import org.ligoj.app.api.SubscriptionStatusWithData;
+import org.ligoj.app.plugin.scm.AbstractIndexBasedPluginResource;
 import org.ligoj.app.resource.node.NodeResource;
 import org.ligoj.app.resource.subscription.SubscriptionResource;
 import org.ligoj.bootstrap.core.NamedBean;
