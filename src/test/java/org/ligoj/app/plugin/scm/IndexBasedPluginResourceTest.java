@@ -208,12 +208,12 @@ public class IndexBasedPluginResourceTest extends AbstractServerTest {
 	@Test
 	public void getKey() throws IOException {
 		// Coverage only
-		Assert.assertEquals("service:scm:impl", resource.getKey());
+		Assert.assertEquals("service", resource.getKey());
 	}
 
 	@Test
-	protected void toData(final String statusContent) {
-		Assert.assertEquals("some", new AbstractIndexBasedPluginResource("service", "impl") {
+	public void toData() {
+		Assert.assertEquals("some", new AbstractIndexBasedPluginResource("service:scm:impl", "impl") {
 		}.toData("some"));
 	}
 }

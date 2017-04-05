@@ -71,7 +71,7 @@ public abstract class AbstractIndexBasedPluginResource extends AbstractToolPlugi
 	private final String key;
 
 	/**
-	 * Simple plug-in name.
+	 * Simple plug-in name, used for validation management.
 	 */
 	protected final String simpleName;
 
