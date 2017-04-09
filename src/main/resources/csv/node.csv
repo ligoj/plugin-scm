@@ -1,6 +1,2 @@
 id;name;refined.id;mode;uiClasses;tag;tagUiClasses
 service:scm;Source;;LINK;fa fa-code-fork;technical;fa fa-industry
-service:scm:git;git;service:scm;;fa fa-git;LINK;
-service:scm:git:dig;git DIG;service:scm:git;LINK;fa fa-git;;
-service:scm:svn;svn;service:scm;LINK;;;
-service:scm:svn:dig;svn DIG;service:scm:svn;LINK;;;
