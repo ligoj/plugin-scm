@@ -199,14 +199,14 @@ public abstract class AbstractIndexBasedPluginResource extends AbstractToolPlugi
 	}
 
 	@Override
-	public boolean checkStatus(final String node, final Map<String, String> parameters) {
+	public boolean checkStatus(final Map<String, String> parameters) {
 		// Status is UP <=> Administration access is UP (if defined)
 		validateAccess(parameters);
 		return true;
 	}
 
 	@Override
-	public SubscriptionStatusWithData checkSubscriptionStatus(final String node, final Map<String, String> parameters) {
+	public SubscriptionStatusWithData checkSubscriptionStatus(final Map<String, String> parameters) {
 		final SubscriptionStatusWithData nodeStatusWithData = new SubscriptionStatusWithData();
 		nodeStatusWithData.put("info", toData(validateRepository(parameters)));
 		return nodeStatusWithData;
