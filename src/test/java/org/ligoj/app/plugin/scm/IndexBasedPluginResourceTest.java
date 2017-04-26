@@ -206,7 +206,7 @@ public class IndexBasedPluginResourceTest extends AbstractServerTest {
 	}
 
 	@Test
-	public void getKey() throws IOException {
+	public void getKey() {
 		// Coverage only
 		Assert.assertEquals("service", resource.getKey());
 	}
