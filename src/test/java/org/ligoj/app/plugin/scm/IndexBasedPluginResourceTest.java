@@ -214,6 +214,7 @@ public class IndexBasedPluginResourceTest extends AbstractServerTest {
 	@Test
 	public void toData() {
 		Assert.assertEquals("some", new AbstractIndexBasedPluginResource("service:scm:impl", "impl") {
+			// Nothing to change
 		}.toData("some"));
 	}
 }
