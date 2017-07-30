@@ -21,7 +21,7 @@ import org.junit.Test;
 import org.ligoj.app.AbstractServerTest;
 import org.ligoj.app.MatcherUtil;
 import org.ligoj.app.api.SubscriptionStatusWithData;
-import org.ligoj.app.resource.node.NodeResource;
+import org.ligoj.app.resource.node.ParameterValueResource;
 import org.ligoj.app.resource.subscription.SubscriptionResource;
 import org.ligoj.bootstrap.core.NamedBean;
 import org.ligoj.bootstrap.core.json.InMemoryPagination;
@@ -70,8 +70,8 @@ public class IndexBasedPluginResourceTest extends AbstractServerTest {
 				Mockito.when(subscriptionResource.getParametersNoCheck(1)).thenReturn(parameters);
 				IndexBasedPluginResourceTest.this.subscriptionResource = subscriptionResource;
 
-				nodeResource = Mockito.mock(NodeResource.class);
-				Mockito.when(nodeResource.getParametersAsMap("service:impl:node")).thenReturn(parameters);
+				pvResource = Mockito.mock(ParameterValueResource.class);
+				Mockito.when(pvResource.getNodeParameters("service:impl:node")).thenReturn(parameters);
 
 				inMemoryPagination = Mockito.mock(InMemoryPagination.class);
 				Mockito.when(inMemoryPagination.newPage(ArgumentMatchers.anyCollection(),

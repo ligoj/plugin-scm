@@ -180,7 +180,7 @@ public abstract class AbstractIndexBasedPluginResource extends AbstractToolPlugi
 	@Path("{node}/{criteria}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public List<NamedBean<String>> findAllByName(@PathParam("node") final String node, @PathParam("criteria") final String criteria) {
-		final Map<String, String> parameters = nodeResource.getParametersAsMap(node);
+		final Map<String, String> parameters = pvResource.getNodeParameters(node);
 		final CurlRequest request = new CurlRequest(HttpMethod.GET, StringUtils.appendIfMissing(parameters.get(parameterUrl), "/"), null);
 		request.setSaveResponse(true);
 		newCurlProcessor(parameters).process(request);
