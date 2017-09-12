@@ -8,7 +8,6 @@ define(function () {
 				current.clipboard = Clipboard;
 				new Clipboard('.service-scm-clipboard', {
 					text: function (trigger) {
-						traceLog($(trigger).prev('a.feature').attr('href'));
 						return $(trigger).prev('a.feature').attr('href');
 					}
 				});
@@ -21,7 +20,7 @@ define(function () {
 		renderFeaturesScm: function (subscription, type) {
 			// Add URL link
 			var url = current.$super('getData')(subscription, 'service:scm:' + type + ':url') + '/' + current.$super('getData')(subscription, 'service:scm:' + type + ':repository');
-			var result = current.$super('renderServicelink')('home', url, 'service:scm:' + type + ':repository', undefined, 'target="_blank"');
+			var result = current.$super('renderServicelink')('home', url, 'service:scm:' + type + ':repository', null, 'target="_blank"');
 
 			// Add Copy URL
 			result += '<button class="btn-link service-scm-clipboard" data-toggle="tooltip" title="' + current.$messages['copy-clipboard'] + '" data-container="body"><i class="fa fa-clipboard"></i></button>';
