@@ -8,7 +8,6 @@
 [![Coverage Status](https://coveralls.io/repos/github/ligoj/plugin-scm/badge.svg?branch=master)](https://coveralls.io/github/ligoj/plugin-scm?branch=master)
 [![Dependency Status](https://www.versioneye.com/user/projects/58caeda8dcaf9e0041b5b978/badge.svg?style=flat)](https://www.versioneye.com/user/projects/58caeda8dcaf9e0041b5b978)
 [![Quality Gate](https://sonarcloud.io/api/badges/gate?key=org.ligoj.plugin:plugin-scm)](https://sonarcloud.io/dashboard/index/org.ligoj.plugin:plugin-scm)
-[![Sourcegraph Badge](https://sourcegraph.com/github.com/ligoj/plugin-scm/-/badge.svg)](https://sourcegraph.com/github.com/ligoj/plugin-scm?badge)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/5369bb9958d9447687c5d0fdfbbfaf8e)](https://www.codacy.com/app/ligoj/plugin-scm?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ligoj/plugin-scm&amp;utm_campaign=Badge_Grade)
 [![CodeFactor](https://www.codefactor.io/repository/github/ligoj/plugin-scm/badge)](https://www.codefactor.io/repository/github/ligoj/plugin-scm)
 [![License](http://img.shields.io/:license-mit-blue.svg)](http://gus.mit-license.org/)
