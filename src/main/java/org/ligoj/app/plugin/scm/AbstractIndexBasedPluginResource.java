@@ -195,7 +195,7 @@ public abstract class AbstractIndexBasedPluginResource extends AbstractToolPlugi
 						.filter(s -> format.format(s).contains(formatCriteria))
 						.map(s -> StringUtils.removeEnd(s.substring(0, Math.max(0, s.indexOf('\"'))), "/"))
 						.filter(((Predicate<String>) String::isEmpty).negate()).map(id -> new NamedBean<>(id, id)).collect(Collectors.toList()),
-				new PageRequest(0, 10)).getContent();
+						PageRequest.of(0, 10)).getContent();
 	}
 
 	@Override
