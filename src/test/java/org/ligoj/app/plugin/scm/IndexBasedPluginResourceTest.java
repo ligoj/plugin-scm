@@ -140,7 +140,7 @@ public class IndexBasedPluginResourceTest extends AbstractServerTest {
 	}
 
 	@Test
-	public void checkStatusAuthenticationFailed() throws Exception {
+	public void checkStatusAuthenticationFailed() {
 		httpServer.start();
 		MatcherUtil.assertThrows(Assertions.assertThrows(ValidationJsonException.class, () -> {
 			resource.checkStatus(subscriptionResource.getParametersNoCheck(1));
@@ -148,7 +148,7 @@ public class IndexBasedPluginResourceTest extends AbstractServerTest {
 	}
 
 	@Test
-	public void checkStatusNotAdmin() throws Exception {
+	public void checkStatusNotAdmin() {
 		httpServer.stubFor(get(urlPathEqualTo("/")).willReturn(aResponse().withStatus(HttpStatus.SC_NOT_FOUND)));
 		httpServer.start();
 		MatcherUtil.assertThrows(Assertions.assertThrows(ValidationJsonException.class, () -> {
@@ -157,7 +157,7 @@ public class IndexBasedPluginResourceTest extends AbstractServerTest {
 	}
 
 	@Test
-	public void checkStatusInvalidIndex() throws Exception {
+	public void checkStatusInvalidIndex() {
 		httpServer.stubFor(get(urlPathEqualTo("/")).willReturn(aResponse().withStatus(HttpStatus.SC_OK).withBody("<html>some</html>")));
 		httpServer.start();
 		MatcherUtil.assertThrows(Assertions.assertThrows(ValidationJsonException.class, () -> {
@@ -177,7 +177,7 @@ public class IndexBasedPluginResourceTest extends AbstractServerTest {
 	}
 
 	@Test
-	public void findAllByNameNoListing() throws Exception {
+	public void findAllByNameNoListing() {
 		httpServer.start();
 
 		final List<NamedBean<String>> projects = resource.findAllByName("service:impl:node", "as-");
