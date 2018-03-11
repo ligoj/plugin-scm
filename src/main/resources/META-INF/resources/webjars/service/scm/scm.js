@@ -6,7 +6,7 @@ define(function () {
 		initialize: function () {
 			require(['clipboard/clipboard'], function (Clipboard) {
 				current.clipboard = Clipboard;
-				new Clipboard('.service-scm-clipboard', {
+				new ClipboardJS('.service-scm-clipboard', {
 					text: function (trigger) {
 						return $(trigger).prev('a.feature').attr('href');
 					}
