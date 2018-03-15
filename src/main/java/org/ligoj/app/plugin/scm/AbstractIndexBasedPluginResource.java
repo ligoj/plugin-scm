@@ -101,7 +101,8 @@ public abstract class AbstractIndexBasedPluginResource extends AbstractToolPlugi
 	 */
 	private void validateAccess(final Map<String, String> parameters) {
 		// Validate the access only for HTTP URL and having a root access
-		if (getRepositoryUrl(parameters).startsWith("http") && Boolean.valueOf(parameters.getOrDefault(parameterIndex, Boolean.FALSE.toString()))) {
+		if (getRepositoryUrl(parameters).startsWith("http")
+				&& Boolean.valueOf(parameters.getOrDefault(parameterIndex, Boolean.FALSE.toString()))) {
 			validateAdminAccess(parameters, newCurlProcessor(parameters));
 		}
 	}
@@ -125,7 +126,8 @@ public abstract class AbstractIndexBasedPluginResource extends AbstractToolPlugi
 	 * Validate the administration connectivity. Expect an authenticated connection.
 	 */
 	private void validateAdminAccess(final Map<String, String> parameters, final CurlProcessor processor) {
-		final CurlRequest request = new CurlRequest(HttpMethod.GET, StringUtils.appendIfMissing(parameters.get(parameterUrl), "/"), null);
+		final CurlRequest request = new CurlRequest(HttpMethod.GET,
+				StringUtils.appendIfMissing(parameters.get(parameterUrl), "/"), null);
 		request.setSaveResponse(true);
 		// Request all repositories access
 		if (!processor.process(request) || !StringUtils.contains(request.getResponse(), "<a href=\"/\">")) {
@@ -145,7 +147,8 @@ public abstract class AbstractIndexBasedPluginResource extends AbstractToolPlugi
 		request.setSaveResponse(true);
 		// Check repository exists
 		if (!newCurlProcessor(parameters).process(request)) {
-			throw new ValidationJsonException(parameterRepository, simpleName + "-repository", parameters.get(parameterRepository));
+			throw new ValidationJsonException(parameterRepository, simpleName + "-repository",
+					parameters.get(parameterRepository));
 		}
 		return request.getResponse();
 	}
@@ -179,9 +182,11 @@ public abstract class AbstractIndexBasedPluginResource extends AbstractToolPlugi
 	@GET
 	@Path("{node}/{criteria}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public List<NamedBean<String>> findAllByName(@PathParam("node") final String node, @PathParam("criteria") final String criteria) {
+	public List<NamedBean<String>> findAllByName(@PathParam("node") final String node,
+			@PathParam("criteria") final String criteria) {
 		final Map<String, String> parameters = pvResource.getNodeParameters(node);
-		final CurlRequest request = new CurlRequest(HttpMethod.GET, StringUtils.appendIfMissing(parameters.get(parameterUrl), "/"), null);
+		final CurlRequest request = new CurlRequest(HttpMethod.GET,
+				StringUtils.appendIfMissing(parameters.get(parameterUrl), "/"), null);
 		request.setSaveResponse(true);
 		newCurlProcessor(parameters).process(request);
 
@@ -190,12 +195,13 @@ public abstract class AbstractIndexBasedPluginResource extends AbstractToolPlugi
 		final String formatCriteria = format.format(criteria);
 
 		// Limit the result
-		return inMemoryPagination.newPage(
-				Arrays.stream(StringUtils.splitByWholeSeparator(StringUtils.defaultString(request.getResponse()), "<a href=\"")).skip(1)
-						.filter(s -> format.format(s).contains(formatCriteria))
-						.map(s -> StringUtils.removeEnd(s.substring(0, Math.max(0, s.indexOf('\"'))), "/"))
-						.filter(((Predicate<String>) String::isEmpty).negate()).map(id -> new NamedBean<>(id, id)).collect(Collectors.toList()),
-						PageRequest.of(0, 10)).getContent();
+		return inMemoryPagination.newPage(Arrays
+				.stream(StringUtils.splitByWholeSeparator(StringUtils.defaultString(request.getResponse()),
+						"<a href=\""))
+				.skip(1).filter(s -> format.format(s).contains(formatCriteria))
+				.map(s -> StringUtils.removeEnd(s.substring(0, Math.max(0, s.indexOf('\"'))), "/"))
+				.filter(((Predicate<String>) String::isEmpty).negate()).map(id -> new NamedBean<>(id, id))
+				.collect(Collectors.toList()), PageRequest.of(0, 10)).getContent();
 	}
 
 	@Override
@@ -213,9 +219,14 @@ public abstract class AbstractIndexBasedPluginResource extends AbstractToolPlugi
 	}
 
 	/**
-	 * Return the data to complete the subscription status
+	 * Return the data to complete the subscription status.
+	 * 
+	 * @param statusContent
+	 *            The status data content as returned by the index..
+	 * @return The status data to put in "info".
 	 */
 	protected Object toData(final String statusContent) {
+		// By default, return the content as is
 		return statusContent;
 	}
 
