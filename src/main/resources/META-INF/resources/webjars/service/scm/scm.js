@@ -23,7 +23,7 @@ define(function () {
 			var result = current.$super('renderServicelink')('home', url, 'service:scm:' + type + ':repository', null, 'target="_blank"');
 
 			// Add Copy URL
-			result += '<button class="btn-link service-scm-clipboard" data-toggle="tooltip" title="' + current.$messages['copy-clipboard'] + '" data-container="body"><i class="fa fa-clipboard"></i></button>';
+			result += '<button class="btn-link service-scm-clipboard" data-toggle="tooltip" title="' + current.$messages['copy-clipboard'] + '" data-container="body"><i class="far fa-clipboard"></i></button>';
 
 			// Help
 			result += current.$super('renderServiceHelpLink')(subscription.parameters, 'service:scm:' + type + ':help');
