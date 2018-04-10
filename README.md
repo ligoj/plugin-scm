@@ -9,7 +9,7 @@
 [![Quality Gate](https://sonarcloud.io/api/badges/gate?key=org.ligoj.plugin:plugin-scm)](https://sonarcloud.io/dashboard/index/org.ligoj.plugin:plugin-scm)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/5369bb9958d9447687c5d0fdfbbfaf8e)](https://www.codacy.com/app/ligoj/plugin-scm?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ligoj/plugin-scm&amp;utm_campaign=Badge_Grade)
 [![CodeFactor](https://www.codefactor.io/repository/github/ligoj/plugin-scm/badge)](https://www.codefactor.io/repository/github/ligoj/plugin-scm)
-[![License](http://img.shields.io/:license-mit-blue.svg)](http://gus.mit-license.org/)
+[![License](http://img.shields.io/:license-mit-blue.svg)](http://fabdouglas.mit-license.org/)
 
 [Ligoj](https://github.com/ligoj/ligoj) SCM - Source Code Management
 Provides the following features :
