@@ -19,10 +19,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.ligoj.app.api.SubscriptionStatusWithData;
 import org.ligoj.app.resource.NormalizeFormat;
 import org.ligoj.app.resource.plugin.AbstractToolPluginResource;
-import org.ligoj.app.resource.plugin.AuthCurlProcessor;
-import org.ligoj.app.resource.plugin.CurlProcessor;
-import org.ligoj.app.resource.plugin.CurlRequest;
 import org.ligoj.bootstrap.core.NamedBean;
+import org.ligoj.bootstrap.core.curl.AuthCurlProcessor;
+import org.ligoj.bootstrap.core.curl.CurlProcessor;
+import org.ligoj.bootstrap.core.curl.CurlRequest;
 import org.ligoj.bootstrap.core.json.InMemoryPagination;
 import org.ligoj.bootstrap.core.validation.ValidationJsonException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +30,7 @@ import org.springframework.data.domain.PageRequest;
 
 /**
  * Basic plug-in based on index to populate existing resources.
- * 
+ *
  * @see "https://docs.atlassian.com/atlassian-confluence/REST/latest"
  */
 @Produces(MediaType.APPLICATION_JSON)
@@ -109,7 +109,7 @@ public abstract class AbstractIndexBasedPluginResource extends AbstractToolPlugi
 
 	/**
 	 * Create a new processor using a basic authentication header.
-	 * 
+	 *
 	 * @param parameters
 	 *            The subscription parameters.
 	 * @return The configured {@link CurlProcessor} to use.
@@ -137,7 +137,7 @@ public abstract class AbstractIndexBasedPluginResource extends AbstractToolPlugi
 
 	/**
 	 * Validate the repository.
-	 * 
+	 *
 	 * @param parameters
 	 *            the space parameters.
 	 * @return Content of root of given repository.
@@ -155,7 +155,7 @@ public abstract class AbstractIndexBasedPluginResource extends AbstractToolPlugi
 
 	/**
 	 * Return the repository URL.
-	 * 
+	 *
 	 * @param parameters
 	 *            the subscription parameters.
 	 * @return the computed repository URL.
@@ -172,7 +172,7 @@ public abstract class AbstractIndexBasedPluginResource extends AbstractToolPlugi
 
 	/**
 	 * Find the repositories matching to the given criteria.Look into name only.
-	 * 
+	 *
 	 * @param criteria
 	 *            the search criteria.
 	 * @param node
@@ -220,7 +220,7 @@ public abstract class AbstractIndexBasedPluginResource extends AbstractToolPlugi
 
 	/**
 	 * Return the data to complete the subscription status.
-	 * 
+	 *
 	 * @param statusContent
 	 *            The status data content as returned by the index..
 	 * @return The status data to put in "info".
