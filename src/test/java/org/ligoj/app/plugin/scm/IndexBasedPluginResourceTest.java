@@ -35,14 +35,14 @@ import org.springframework.data.domain.Pageable;
 /**
  * Test class of {@link AbstractIndexBasedPluginResource}
  */
-public class IndexBasedPluginResourceTest extends AbstractServerTest {
+class IndexBasedPluginResourceTest extends AbstractServerTest {
 	private AbstractIndexBasedPluginResource resource;
 	private SubscriptionResource subscriptionResource;
 	private Map<String, String> parameters;
 
 	@SuppressWarnings("unchecked")
 	@BeforeEach
-	public void newMockResource() {
+	void newMockResource() {
 		resource = new AbstractIndexBasedPluginResource("service", "impl") {
 
 			@Override
@@ -82,12 +82,12 @@ public class IndexBasedPluginResourceTest extends AbstractServerTest {
 	}
 
 	@Test
-	public void getLastVersion() throws Exception {
+	void getLastVersion() throws Exception {
 		Assertions.assertNull(resource.getLastVersion());
 	}
 
 	@Test
-	public void link() throws Exception {
+	void link() throws Exception {
 		prepareMockRepository();
 		httpServer.start();
 
@@ -99,7 +99,7 @@ public class IndexBasedPluginResourceTest extends AbstractServerTest {
 	}
 
 	@Test
-	public void linkNotFound() throws Exception {
+	void linkNotFound() throws Exception {
 		prepareMockRepository();
 		httpServer.start();
 
@@ -113,7 +113,7 @@ public class IndexBasedPluginResourceTest extends AbstractServerTest {
 	}
 
 	@Test
-	public void checkSubscriptionStatus() throws Exception {
+	void checkSubscriptionStatus() throws Exception {
 		prepareMockRepository();
 		final SubscriptionStatusWithData nodeStatusWithData = resource
 				.checkSubscriptionStatus(subscriptionResource.getParametersNoCheck(1));
@@ -134,13 +134,13 @@ public class IndexBasedPluginResourceTest extends AbstractServerTest {
 	}
 
 	@Test
-	public void checkStatus() throws Exception {
+	void checkStatus() throws Exception {
 		prepareMockAdmin();
 		Assertions.assertTrue(resource.checkStatus(subscriptionResource.getParametersNoCheck(1)));
 	}
 
 	@Test
-	public void checkStatusAuthenticationFailed() {
+	void checkStatusAuthenticationFailed() {
 		httpServer.start();
 		MatcherUtil.assertThrows(Assertions.assertThrows(ValidationJsonException.class, () -> {
 			resource.checkStatus(subscriptionResource.getParametersNoCheck(1));
@@ -148,7 +148,7 @@ public class IndexBasedPluginResourceTest extends AbstractServerTest {
 	}
 
 	@Test
-	public void checkStatusNotAdmin() {
+	void checkStatusNotAdmin() {
 		httpServer.stubFor(get(urlPathEqualTo("/")).willReturn(aResponse().withStatus(HttpStatus.SC_NOT_FOUND)));
 		httpServer.start();
 		MatcherUtil.assertThrows(Assertions.assertThrows(ValidationJsonException.class, () -> {
@@ -157,7 +157,7 @@ public class IndexBasedPluginResourceTest extends AbstractServerTest {
 	}
 
 	@Test
-	public void checkStatusInvalidIndex() {
+	void checkStatusInvalidIndex() {
 		httpServer.stubFor(get(urlPathEqualTo("/")).willReturn(aResponse().withStatus(HttpStatus.SC_OK).withBody("<html>some</html>")));
 		httpServer.start();
 		MatcherUtil.assertThrows(Assertions.assertThrows(ValidationJsonException.class, () -> {
@@ -166,7 +166,7 @@ public class IndexBasedPluginResourceTest extends AbstractServerTest {
 	}
 
 	@Test
-	public void findAllByName() throws Exception {
+	void findAllByName() throws Exception {
 		prepareMockAdmin();
 		httpServer.start();
 
@@ -177,7 +177,7 @@ public class IndexBasedPluginResourceTest extends AbstractServerTest {
 	}
 
 	@Test
-	public void findAllByNameNoListing() {
+	void findAllByNameNoListing() {
 		httpServer.start();
 
 		final List<NamedBean<String>> projects = resource.findAllByName("service:impl:node", "as-");
@@ -185,27 +185,27 @@ public class IndexBasedPluginResourceTest extends AbstractServerTest {
 	}
 
 	@Test
-	public void checkStatusNoIndex() throws Exception {
+	void checkStatusNoIndex() throws Exception {
 		prepareMockAdmin();
 		parameters.put("service:index", "false");
 		Assertions.assertTrue(resource.checkStatus(subscriptionResource.getParametersNoCheck(1)));
 	}
 
 	@Test
-	public void checkStatusNotHttp() throws Exception {
+	void checkStatusNotHttp() throws Exception {
 		prepareMockAdmin();
 		parameters.put("service:url", "hq://");
 		Assertions.assertTrue(resource.checkStatus(subscriptionResource.getParametersNoCheck(1)));
 	}
 
 	@Test
-	public void getKey() {
+	void getKey() {
 		// Coverage only
 		Assertions.assertEquals("service", resource.getKey());
 	}
 
 	@Test
-	public void toData() {
+	void toData() {
 		Assertions.assertEquals("some", new AbstractIndexBasedPluginResource("service:scm:impl", "impl") {
 			// Nothing to change
 		}.toData("some"));
