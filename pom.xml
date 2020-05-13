@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.ligoj.api</groupId>
 		<artifactId>plugin-parent</artifactId>
-		<version>3.2.4</version>
+		<version>3.2.5</version>
 		<relativePath />
 	</parent>
 
@@ -13,6 +13,13 @@
 	<version>1.0.7-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>Ligoj - Plugin SCM</name>
+	<url>https://github.com/ligoj/plugin-scm</url>
+
+	<scm>
+		<connection>scm:git:https://github.com/ligoj/plugin-scm</connection>
+		<developerConnection>scm:git:https://github.com/ligoj/plugin-scm</developerConnection>
+		<url>https://github.com/ligoj/plugin-scm.git</url>
+	</scm>
 
 	<profiles>
 		<profile>
