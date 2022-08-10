@@ -1,11 +1,9 @@
 package org.ligoj.app.plugin.scm;
 
-import java.text.Format;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -76,10 +74,8 @@ public abstract class AbstractIndexBasedPluginResource extends AbstractToolPlugi
 	protected final String simpleName;
 
 	/**
-	 * @param key
-	 *            Plug-in key.
-	 * @param simpleName
-	 *            Simple plug-in name.
+	 * @param key        Plug-in key.
+	 * @param simpleName Simple plug-in name.
 	 */
 	protected AbstractIndexBasedPluginResource(final String key, final String simpleName) {
 		this.key = key;
@@ -110,8 +106,7 @@ public abstract class AbstractIndexBasedPluginResource extends AbstractToolPlugi
 	/**
 	 * Create a new processor using a basic authentication header.
 	 *
-	 * @param parameters
-	 *            The subscription parameters.
+	 * @param parameters The subscription parameters.
 	 * @return The configured {@link CurlProcessor} to use.
 	 */
 	protected CurlProcessor newCurlProcessor(final Map<String, String> parameters) {
@@ -138,8 +133,7 @@ public abstract class AbstractIndexBasedPluginResource extends AbstractToolPlugi
 	/**
 	 * Validate the repository.
 	 *
-	 * @param parameters
-	 *            the space parameters.
+	 * @param parameters the space parameters.
 	 * @return Content of root of given repository.
 	 */
 	protected String validateRepository(final Map<String, String> parameters) {
@@ -156,8 +150,7 @@ public abstract class AbstractIndexBasedPluginResource extends AbstractToolPlugi
 	/**
 	 * Return the repository URL.
 	 *
-	 * @param parameters
-	 *            the subscription parameters.
+	 * @param parameters the subscription parameters.
 	 * @return the computed repository URL.
 	 */
 	protected String getRepositoryUrl(final Map<String, String> parameters) {
@@ -173,10 +166,8 @@ public abstract class AbstractIndexBasedPluginResource extends AbstractToolPlugi
 	/**
 	 * Find the repositories matching to the given criteria.Look into name only.
 	 *
-	 * @param criteria
-	 *            the search criteria.
-	 * @param node
-	 *            the node to be tested with given parameters.
+	 * @param criteria the search criteria.
+	 * @param node     the node to be tested with given parameters.
 	 * @return project name.
 	 */
 	@GET
@@ -184,24 +175,24 @@ public abstract class AbstractIndexBasedPluginResource extends AbstractToolPlugi
 	@Consumes(MediaType.APPLICATION_JSON)
 	public List<NamedBean<String>> findAllByName(@PathParam("node") final String node,
 			@PathParam("criteria") final String criteria) {
-		final Map<String, String> parameters = pvResource.getNodeParameters(node);
-		final CurlRequest request = new CurlRequest(HttpMethod.GET,
+		final var parameters = pvResource.getNodeParameters(node);
+		final var request = new CurlRequest(HttpMethod.GET,
 				StringUtils.appendIfMissing(parameters.get(parameterUrl), "/"), null);
 		request.setSaveResponse(true);
 		newCurlProcessor(parameters).process(request);
 
 		// Prepare the context, an ordered set of projects
-		final Format format = new NormalizeFormat();
-		final String formatCriteria = format.format(criteria);
+		final var format = new NormalizeFormat();
+		final var formatCriteria = format.format(criteria);
 
 		// Limit the result
-		return inMemoryPagination.newPage(Arrays
-				.stream(StringUtils.splitByWholeSeparator(StringUtils.defaultString(request.getResponse()),
-						"<a href=\""))
-				.skip(1).filter(s -> format.format(s).contains(formatCriteria))
-				.map(s -> StringUtils.removeEnd(s.substring(0, Math.max(0, s.indexOf('\"'))), "/"))
-				.filter(((Predicate<String>) String::isEmpty).negate()).map(id -> new NamedBean<>(id, id))
-				.collect(Collectors.toList()), PageRequest.of(0, 10)).getContent();
+		return inMemoryPagination.newPage(
+				Arrays.stream(StringUtils.splitByWholeSeparator(StringUtils.defaultString(request.getResponse()),
+						"<a href=\"")).skip(1).filter(s -> format.format(s).contains(formatCriteria))
+						.map(s -> StringUtils.removeEnd(s.substring(0, Math.max(0, s.indexOf('\"'))), "/"))
+						.filter(((Predicate<String>) String::isEmpty).negate()).map(id -> new NamedBean<>(id, id))
+						.toList(),
+				PageRequest.of(0, 10)).getContent();
 	}
 
 	@Override
@@ -221,8 +212,7 @@ public abstract class AbstractIndexBasedPluginResource extends AbstractToolPlugi
 	/**
 	 * Return the data to complete the subscription status.
 	 *
-	 * @param statusContent
-	 *            The status data content as returned by the index..
+	 * @param statusContent The status data content as returned by the index..
 	 * @return The status data to put in "info".
 	 */
 	protected Object toData(final String statusContent) {
