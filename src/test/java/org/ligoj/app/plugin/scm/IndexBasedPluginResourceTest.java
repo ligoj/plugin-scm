@@ -14,7 +14,7 @@ import java.util.Map;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.http.HttpStatus;
+import org.apache.hc.core5.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -107,9 +107,7 @@ class IndexBasedPluginResourceTest extends AbstractServerTest {
 
 		// Invoke create for an already created entity, since for now, there is
 		// nothing but validation pour SonarQube
-		MatcherUtil.assertThrows(Assertions.assertThrows(ValidationJsonException.class, () -> {
-			resource.link(1);
-		}), "service:repository", "impl-repository");
+		MatcherUtil.assertThrows(Assertions.assertThrows(ValidationJsonException.class, () -> resource.link(1)), "service:repository", "impl-repository");
 	}
 
 	@Test
@@ -142,27 +140,21 @@ class IndexBasedPluginResourceTest extends AbstractServerTest {
 	@Test
 	void checkStatusAuthenticationFailed() {
 		httpServer.start();
-		MatcherUtil.assertThrows(Assertions.assertThrows(ValidationJsonException.class, () -> {
-			resource.checkStatus(subscriptionResource.getParametersNoCheck(1));
-		}), "service:url", "impl-admin");
+		MatcherUtil.assertThrows(Assertions.assertThrows(ValidationJsonException.class, () -> resource.checkStatus(subscriptionResource.getParametersNoCheck(1))), "service:url", "impl-admin");
 	}
 
 	@Test
 	void checkStatusNotAdmin() {
 		httpServer.stubFor(get(urlPathEqualTo("/")).willReturn(aResponse().withStatus(HttpStatus.SC_NOT_FOUND)));
 		httpServer.start();
-		MatcherUtil.assertThrows(Assertions.assertThrows(ValidationJsonException.class, () -> {
-			resource.checkStatus(subscriptionResource.getParametersNoCheck(1));
-		}), "service:url", "impl-admin");
+		MatcherUtil.assertThrows(Assertions.assertThrows(ValidationJsonException.class, () -> resource.checkStatus(subscriptionResource.getParametersNoCheck(1))), "service:url", "impl-admin");
 	}
 
 	@Test
 	void checkStatusInvalidIndex() {
 		httpServer.stubFor(get(urlPathEqualTo("/")).willReturn(aResponse().withStatus(HttpStatus.SC_OK).withBody("<html>some</html>")));
 		httpServer.start();
-		MatcherUtil.assertThrows(Assertions.assertThrows(ValidationJsonException.class, () -> {
-			resource.checkStatus(subscriptionResource.getParametersNoCheck(1));
-		}), "service:url", "impl-admin");
+		MatcherUtil.assertThrows(Assertions.assertThrows(ValidationJsonException.class, () -> resource.checkStatus(subscriptionResource.getParametersNoCheck(1))), "service:url", "impl-admin");
 	}
 
 	@Test
@@ -172,8 +164,8 @@ class IndexBasedPluginResourceTest extends AbstractServerTest {
 
 		final List<NamedBean<String>> projects = resource.findAllByName("service:impl:node", "as-");
 		Assertions.assertEquals(4, projects.size());
-		Assertions.assertEquals("has-evamed", projects.get(0).getId());
-		Assertions.assertEquals("has-evamed", projects.get(0).getName());
+		Assertions.assertEquals("has-event", projects.get(0).getId());
+		Assertions.assertEquals("has-event", projects.get(0).getName());
 	}
 
 	@Test
