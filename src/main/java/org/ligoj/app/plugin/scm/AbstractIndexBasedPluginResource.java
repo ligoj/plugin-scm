@@ -212,7 +212,7 @@ public abstract class AbstractIndexBasedPluginResource extends AbstractToolPlugi
 	/**
 	 * Return the data to complete the subscription status.
 	 *
-	 * @param statusContent The status data content as returned by the index..
+	 * @param statusContent The status data content as returned by the index.
 	 * @return The status data to put in "info".
 	 */
 	protected Object toData(final String statusContent) {
