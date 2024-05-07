@@ -98,7 +98,7 @@ public abstract class AbstractIndexBasedPluginResource extends AbstractToolPlugi
 	private void validateAccess(final Map<String, String> parameters) {
 		// Validate the access only for HTTP URL and having a root access
 		if (getRepositoryUrl(parameters).startsWith("http")
-				&& Boolean.valueOf(parameters.getOrDefault(parameterIndex, Boolean.FALSE.toString()))) {
+				&& Boolean.parseBoolean(parameters.getOrDefault(parameterIndex, Boolean.FALSE.toString()))) {
 			validateAdminAccess(parameters, newCurlProcessor(parameters));
 		}
 	}

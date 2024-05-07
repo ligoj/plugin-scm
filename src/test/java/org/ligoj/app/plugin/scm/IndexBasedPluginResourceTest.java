@@ -164,8 +164,8 @@ class IndexBasedPluginResourceTest extends AbstractServerTest {
 
 		final List<NamedBean<String>> projects = resource.findAllByName("service:impl:node", "as-");
 		Assertions.assertEquals(4, projects.size());
-		Assertions.assertEquals("has-event", projects.get(0).getId());
-		Assertions.assertEquals("has-event", projects.get(0).getName());
+		Assertions.assertEquals("has-event", projects.getFirst().getId());
+		Assertions.assertEquals("has-event", projects.getFirst().getName());
 	}
 
 	@Test
