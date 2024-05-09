@@ -1,35 +1,35 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>org.ligoj.api</groupId>
-		<artifactId>plugin-parent</artifactId>
-		<version>4.1.7</version>
-		<relativePath />
-	</parent>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.ligoj.api</groupId>
+        <artifactId>plugin-parent</artifactId>
+        <version>4.1.8</version>
+        <relativePath/>
+    </parent>
 
-	<groupId>org.ligoj.plugin</groupId>
-	<artifactId>plugin-scm</artifactId>
-	<version>1.1.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
-	<name>Ligoj - Plugin SCM</name>
-	<url>https://github.com/ligoj/plugin-scm</url>
+    <groupId>org.ligoj.plugin</groupId>
+    <artifactId>plugin-scm</artifactId>
+    <version>1.1.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    <name>Ligoj - Plugin SCM</name>
+    <url>https://github.com/ligoj/plugin-scm</url>
 
-	<scm>
-		<connection>scm:git:https://github.com/ligoj/plugin-scm</connection>
-		<developerConnection>scm:git:https://github.com/ligoj/plugin-scm</developerConnection>
-		<url>https://github.com/ligoj/plugin-scm.git</url>
-	</scm>
+    <scm>
+        <connection>scm:git:https://github.com/ligoj/plugin-scm</connection>
+        <developerConnection>scm:git:https://github.com/ligoj/plugin-scm</developerConnection>
+        <url>https://github.com/ligoj/plugin-scm.git</url>
+    </scm>
 
-	<profiles>
-		<profile>
-			<id>github</id>
-			<distributionManagement>
-				<repository>
-					<id>github-ligoj</id>
-					<url>https://maven.pkg.github.com/ligoj/plugin-scm</url>
-				</repository>
-			</distributionManagement>
-		</profile>
-	</profiles>
+    <profiles>
+        <profile>
+            <id>github</id>
+            <distributionManagement>
+                <repository>
+                    <id>github-ligoj</id>
+                    <url>https://maven.pkg.github.com/ligoj/plugin-scm</url>
+                </repository>
+            </distributionManagement>
+        </profile>
+    </profiles>
 </project>
