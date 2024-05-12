@@ -19,8 +19,8 @@ define(function () {
 		 */
 		renderFeaturesScm: function (subscription, type) {
 			// Add URL link
-			var url = current.$super('getData')(subscription, 'service:scm:' + type + ':url') + '/' + current.$super('getData')(subscription, 'service:scm:' + type + ':repository');
-			var result = current.$super('renderServiceLink')('home', url, 'service:scm:' + type + ':repository', null, 'target="_blank"');
+			const url = current.$super('getData')(subscription, 'service:scm:' + type + ':url') + '/' + current.$super('getData')(subscription, 'service:scm:' + type + ':repository');
+			let result = current.$super('renderServiceLink')('home', url, 'service:scm:' + type + ':repository', null, 'target="_blank"');
 
 			// Add Copy URL
 			result += '<button class="btn-link service-scm-clipboard" data-toggle="tooltip" title="' + current.$messages['copy-clipboard'] + '" data-container="body"><i class="far fa-clipboard"></i></button>';

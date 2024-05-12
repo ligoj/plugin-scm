@@ -1,17 +1,5 @@
 package org.ligoj.app.plugin.scm;
 
-import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
-import static com.github.tomakehurst.wiremock.client.WireMock.get;
-import static com.github.tomakehurst.wiremock.client.WireMock.urlPathEqualTo;
-
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.hc.core5.http.HttpStatus;
@@ -19,11 +7,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.ligoj.app.AbstractServerTest;
-import org.ligoj.app.api.SubscriptionStatusWithData;
 import org.ligoj.app.resource.node.ParameterValueResource;
 import org.ligoj.app.resource.subscription.SubscriptionResource;
 import org.ligoj.bootstrap.MatcherUtil;
-import org.ligoj.bootstrap.core.NamedBean;
 import org.ligoj.bootstrap.core.json.InMemoryPagination;
 import org.ligoj.bootstrap.core.validation.ValidationJsonException;
 import org.mockito.ArgumentMatchers;
@@ -31,6 +17,15 @@ import org.mockito.Mockito;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.github.tomakehurst.wiremock.client.WireMock.*;
 
 /**
  * Test class of {@link AbstractIndexBasedPluginResource}
@@ -113,8 +108,7 @@ class IndexBasedPluginResourceTest extends AbstractServerTest {
 	@Test
 	void checkSubscriptionStatus() throws Exception {
 		prepareMockRepository();
-		final SubscriptionStatusWithData nodeStatusWithData = resource
-				.checkSubscriptionStatus(subscriptionResource.getParametersNoCheck(1));
+		final var nodeStatusWithData = resource.checkSubscriptionStatus(subscriptionResource.getParametersNoCheck(1));
 		Assertions.assertTrue(nodeStatusWithData.getStatus().isUp());
 		Assertions.assertEquals(1, nodeStatusWithData.getData().get("info"));
 	}
@@ -140,21 +134,24 @@ class IndexBasedPluginResourceTest extends AbstractServerTest {
 	@Test
 	void checkStatusAuthenticationFailed() {
 		httpServer.start();
-		MatcherUtil.assertThrows(Assertions.assertThrows(ValidationJsonException.class, () -> resource.checkStatus(subscriptionResource.getParametersNoCheck(1))), "service:url", "impl-admin");
+		final var subscriptionId = subscriptionResource.getParametersNoCheck(1);
+		MatcherUtil.assertThrows(Assertions.assertThrows(ValidationJsonException.class, () -> resource.checkStatus(subscriptionId)), "service:url", "impl-admin");
 	}
 
 	@Test
 	void checkStatusNotAdmin() {
 		httpServer.stubFor(get(urlPathEqualTo("/")).willReturn(aResponse().withStatus(HttpStatus.SC_NOT_FOUND)));
 		httpServer.start();
-		MatcherUtil.assertThrows(Assertions.assertThrows(ValidationJsonException.class, () -> resource.checkStatus(subscriptionResource.getParametersNoCheck(1))), "service:url", "impl-admin");
+		final var subscriptionId = subscriptionResource.getParametersNoCheck(1);
+		MatcherUtil.assertThrows(Assertions.assertThrows(ValidationJsonException.class, () -> resource.checkStatus(subscriptionId)), "service:url", "impl-admin");
 	}
 
 	@Test
 	void checkStatusInvalidIndex() {
 		httpServer.stubFor(get(urlPathEqualTo("/")).willReturn(aResponse().withStatus(HttpStatus.SC_OK).withBody("<html>some</html>")));
 		httpServer.start();
-		MatcherUtil.assertThrows(Assertions.assertThrows(ValidationJsonException.class, () -> resource.checkStatus(subscriptionResource.getParametersNoCheck(1))), "service:url", "impl-admin");
+		final var subscriptionId = subscriptionResource.getParametersNoCheck(1);
+		MatcherUtil.assertThrows(Assertions.assertThrows(ValidationJsonException.class, () -> resource.checkStatus(subscriptionId)), "service:url", "impl-admin");
 	}
 
 	@Test
@@ -162,7 +159,7 @@ class IndexBasedPluginResourceTest extends AbstractServerTest {
 		prepareMockAdmin();
 		httpServer.start();
 
-		final List<NamedBean<String>> projects = resource.findAllByName("service:impl:node", "as-");
+		final var projects = resource.findAllByName("service:impl:node", "as-");
 		Assertions.assertEquals(4, projects.size());
 		Assertions.assertEquals("has-event", projects.getFirst().getId());
 		Assertions.assertEquals("has-event", projects.getFirst().getName());
@@ -172,7 +169,7 @@ class IndexBasedPluginResourceTest extends AbstractServerTest {
 	void findAllByNameNoListing() {
 		httpServer.start();
 
-		final List<NamedBean<String>> projects = resource.findAllByName("service:impl:node", "as-");
+		final var projects = resource.findAllByName("service:impl:node", "as-");
 		Assertions.assertEquals(0, projects.size());
 	}
 
