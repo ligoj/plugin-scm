@@ -1,7 +1,7 @@
 package org.ligoj.app.plugin.scm;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.apache.hc.core5.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -42,7 +42,7 @@ class IndexBasedPluginResourceTest extends AbstractServerTest {
 
 			@Override
 			protected String getRepositoryUrl(final Map<String, String> parameters) {
-				return StringUtils.appendIfMissing(super.getRepositoryUrl(parameters), "/");
+				return Strings.CS.appendIfMissing(super.getRepositoryUrl(parameters), "/");
 			}
 
 			/**

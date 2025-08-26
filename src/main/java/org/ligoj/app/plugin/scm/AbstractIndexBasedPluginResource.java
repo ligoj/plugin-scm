@@ -1,19 +1,9 @@
 package org.ligoj.app.plugin.scm;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Predicate;
-
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.HttpMethod;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PathParam;
-import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
-
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.ligoj.app.api.SubscriptionStatusWithData;
 import org.ligoj.app.resource.NormalizeFormat;
 import org.ligoj.app.resource.plugin.AbstractToolPluginResource;
@@ -25,6 +15,11 @@ import org.ligoj.bootstrap.core.json.InMemoryPagination;
 import org.ligoj.bootstrap.core.validation.ValidationJsonException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Predicate;
 
 /**
  * Basic plug-in based on index to populate existing resources.
@@ -122,10 +117,10 @@ public abstract class AbstractIndexBasedPluginResource extends AbstractToolPlugi
 	 */
 	private void validateAdminAccess(final Map<String, String> parameters, final CurlProcessor processor) {
 		final CurlRequest request = new CurlRequest(HttpMethod.GET,
-				StringUtils.appendIfMissing(parameters.get(parameterUrl), "/"), null);
+				Strings.CS.appendIfMissing(parameters.get(parameterUrl), "/"), null);
 		request.setSaveResponse(true);
-		// Request all repositories access
-		if (!processor.process(request) || !StringUtils.contains(request.getResponse(), "<a href=\"/\">")) {
+		// Request all repository accesses
+		if (!processor.process(request) || !Strings.CS.contains(request.getResponse(), "<a href=\"/\">")) {
 			throw new ValidationJsonException(parameterUrl, simpleName + "-admin", parameters.get(parameterUser));
 		}
 	}
@@ -154,7 +149,7 @@ public abstract class AbstractIndexBasedPluginResource extends AbstractToolPlugi
 	 * @return the computed repository URL.
 	 */
 	protected String getRepositoryUrl(final Map<String, String> parameters) {
-		return StringUtils.appendIfMissing(parameters.get(parameterUrl), "/") + parameters.get(parameterRepository);
+		return Strings.CS.appendIfMissing(parameters.get(parameterUrl), "/") + parameters.get(parameterRepository);
 	}
 
 	@Override
@@ -177,7 +172,7 @@ public abstract class AbstractIndexBasedPluginResource extends AbstractToolPlugi
 			@PathParam("criteria") final String criteria) {
 		final var parameters = pvResource.getNodeParameters(node);
 		final var request = new CurlRequest(HttpMethod.GET,
-				StringUtils.appendIfMissing(parameters.get(parameterUrl), "/"), null);
+				Strings.CS.appendIfMissing(parameters.get(parameterUrl), "/"), null);
 		request.setSaveResponse(true);
 		newCurlProcessor(parameters).process(request);
 
@@ -189,7 +184,7 @@ public abstract class AbstractIndexBasedPluginResource extends AbstractToolPlugi
 		return inMemoryPagination.newPage(
 				Arrays.stream(StringUtils.splitByWholeSeparator(StringUtils.defaultString(request.getResponse()),
 						"<a href=\"")).skip(1).filter(s -> format.format(s).contains(formatCriteria))
-						.map(s -> StringUtils.removeEnd(s.substring(0, Math.max(0, s.indexOf('\"'))), "/"))
+						.map(s -> Strings.CS.removeEnd(s.substring(0, Math.max(0, s.indexOf('\"'))), "/"))
 						.filter(((Predicate<String>) String::isEmpty).negate()).map(id -> new NamedBean<>(id, id))
 						.toList(),
 				PageRequest.of(0, 10)).getContent();
