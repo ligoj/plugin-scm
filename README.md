@@ -1,4 +1,4 @@
-# :link: Ligoj Source Code Management plugin [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.ligoj.plugin/plugin-scm/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.ligoj.plugin/plugin-scm)
+# :link: Ligoj Source Code Management plugin ![Maven Central](https://img.shields.io/maven-central/v/org.ligoj.plugin/plugin-scm)
 
 [![Build Status](https://travis-ci.org/ligoj/plugin-scm.svg?branch=master)](https://travis-ci.org/ligoj/plugin-scm)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=org.ligoj.plugin%3Aplugin-scm&metric=coverage)](https://sonarcloud.io/dashboard?id=org.ligoj.plugin%3Aplugin-scm)
