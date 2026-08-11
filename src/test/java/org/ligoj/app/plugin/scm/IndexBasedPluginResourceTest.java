@@ -13,7 +13,6 @@ import org.ligoj.bootstrap.MatcherUtil;
 import org.ligoj.bootstrap.core.json.InMemoryPagination;
 import org.ligoj.bootstrap.core.validation.ValidationJsonException;
 import org.mockito.ArgumentMatchers;
-import org.mockito.Mockito;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -26,6 +25,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * Test class of {@link AbstractIndexBasedPluginResource}
@@ -54,22 +55,22 @@ class IndexBasedPluginResourceTest extends AbstractServerTest {
 			}
 
 			{
-				subscriptionResource = Mockito.mock(SubscriptionResource.class);
+				subscriptionResource = mock(SubscriptionResource.class);
 				parameters = new HashMap<>();
 				parameters.put("service:url", "http://localhost:" + MOCK_PORT);
 				parameters.put("service:user", "user");
 				parameters.put("service:password", "secret");
 				parameters.put("service:index", "true");
 				parameters.put("service:repository", "my-repo");
-				Mockito.when(subscriptionResource.getParameters(1)).thenReturn(parameters);
-				Mockito.when(subscriptionResource.getParametersNoCheck(1)).thenReturn(parameters);
+				when(subscriptionResource.getParameters(1)).thenReturn(parameters);
+				when(subscriptionResource.getParametersNoCheck(1)).thenReturn(parameters);
 				IndexBasedPluginResourceTest.this.subscriptionResource = subscriptionResource;
 
-				pvResource = Mockito.mock(ParameterValueResource.class);
-				Mockito.when(pvResource.getNodeParameters("service:impl:node")).thenReturn(parameters);
+				pvResource = mock(ParameterValueResource.class);
+				when(pvResource.getNodeParameters("service:impl:node")).thenReturn(parameters);
 
-				inMemoryPagination = Mockito.mock(InMemoryPagination.class);
-				Mockito.when(inMemoryPagination.newPage(ArgumentMatchers.anyCollection(), ArgumentMatchers.any(Pageable.class)))
+				inMemoryPagination = mock(InMemoryPagination.class);
+				when(inMemoryPagination.newPage(ArgumentMatchers.anyCollection(), ArgumentMatchers.any(Pageable.class)))
 						.thenAnswer(i -> new PageImpl<>(new ArrayList<>((Collection<Object>) i.getArguments()[0]),
 								(Pageable) i.getArguments()[1], ((Collection<Object>) i.getArguments()[0]).size()));
 			}
